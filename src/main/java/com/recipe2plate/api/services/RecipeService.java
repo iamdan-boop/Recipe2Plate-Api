@@ -3,6 +3,7 @@ package com.recipe2plate.api.services;
 
 import com.recipe2plate.api.dto.RecipeDto;
 import com.recipe2plate.api.entities.Recipe;
+import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.repositories.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class RecipeService {
 
     public Recipe updateRecipe(Long recipeId, RecipeDto recipeDto) {
         final Recipe findRecipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalStateException("Recipe not found"));
+                .orElseThrow(() -> new NoRecordFoundException("Recipe not found"));
         findRecipe.setRecipeName(recipeDto.getRecipeName());
         findRecipe.setDescription(recipeDto.getDescription());
         return recipeRepository.save(findRecipe);
@@ -41,7 +42,7 @@ public class RecipeService {
 
     public void deleteRecipe(Long recipeId) {
         final Recipe findToDeleteRecipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalStateException("Not Recipe Found"));
+                .orElseThrow(() -> new NoRecordFoundException("Not Recipe Found"));
         recipeRepository.delete(findToDeleteRecipe);
     }
 }
