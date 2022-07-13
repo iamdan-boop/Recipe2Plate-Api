@@ -1,6 +1,5 @@
-package com.recipe2plate.api.config.security;
+package com.recipe2plate.api.security;
 
-import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;

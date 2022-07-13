@@ -1,24 +1,19 @@
-package com.recipe2plate.api.dto;
+package com.recipe2plate.api.dto.request;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class RecipeDto {
-    @NotNull
-    @NotEmpty
-    private String recipeName;
+public class CreateIngredientRequest {
 
     @NotNull
     @NotEmpty
-    private String description;
+    private String ingredientName;
 }

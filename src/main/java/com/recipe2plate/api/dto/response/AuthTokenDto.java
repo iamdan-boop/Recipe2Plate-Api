@@ -1,4 +1,4 @@
-package com.recipe2plate.api.dto;
+package com.recipe2plate.api.dto.response;
 
 import lombok.*;
 

@@ -10,6 +10,30 @@ spring:
     show-sql: true
     database: mysql
 
+
+  main:
+    allow-bean-definition-overriding: true
 security.jwt.token.secret-key: qwemqkweqtqkjeqkwehqbgtqkwjeqlkjw
+
+
+
+graphql:
+  altair:
+    enabled: true
+    mapping: /altair
+    subscriptions:
+      timeout: 30
+      reconnect: false
+    static:
+      base-path: /
+    page-title: Altair
+    cdn:
+      enabled: false
+      version: 4.0.2
+    options:
+      endpoint-url: /graphql
+      subscriptions-endpoint: /subscriptions
+      initial-settings:
+        theme: dracula
 
 

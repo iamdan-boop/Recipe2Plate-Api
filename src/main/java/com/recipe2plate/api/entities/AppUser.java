@@ -1,6 +1,7 @@
 package com.recipe2plate.api.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,9 +11,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppUser {
+public class AppUser extends BaseEntity {
 
     @SequenceGenerator(
             name = "app_user_seq",
@@ -32,6 +34,7 @@ public class AppUser {
 
     private String email;
 
+    @JsonIgnore
     private String password;
 
     @ManyToOne

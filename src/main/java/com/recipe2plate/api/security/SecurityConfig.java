@@ -1,33 +1,38 @@
-package com.recipe2plate.api.config.security;
+package com.recipe2plate.api.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
 
     private final UserAuthenticationEntryPoint userAuthenticationEntryPoint;
     private final UserAuthenticationProvider userAuthenticationProvider;
 
+    public SecurityConfig(UserAuthenticationEntryPoint userAuthenticationEntryPoint, UserAuthenticationProvider userAuthenticationProvider) {
+        this.userAuthenticationEntryPoint = userAuthenticationEntryPoint;
+        this.userAuthenticationProvider = userAuthenticationProvider;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint).and()
                 .addFilterBefore(new UsernamePasswordAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), UsernamePasswordAuthFilter.class)
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/signIn", "/api/signUp").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
         return httpSecurity.build();
     }
 }

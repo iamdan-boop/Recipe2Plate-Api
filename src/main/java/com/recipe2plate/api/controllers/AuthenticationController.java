@@ -1,8 +1,8 @@
 package com.recipe2plate.api.controllers;
 
 
-import com.recipe2plate.api.config.security.UserAuthenticationProvider;
-import com.recipe2plate.api.dto.AuthTokenDto;
+import com.recipe2plate.api.security.UserAuthenticationProvider;
+import com.recipe2plate.api.dto.response.AuthTokenDto;
 import com.recipe2plate.api.dto.request.SignupRequest;
 import com.recipe2plate.api.entities.AppUser;
 import com.recipe2plate.api.services.AuthenticationService;
@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthenticationController {
-
     private final UserAuthenticationProvider userAuthenticationProvider;
     private final AuthenticationService authenticationService;
 

@@ -5,16 +5,19 @@ import com.recipe2plate.api.dto.request.LoginRequest;
 import com.recipe2plate.api.dto.request.SignupRequest;
 import com.recipe2plate.api.entities.AppUser;
 import com.recipe2plate.api.entities.Role;
+import com.recipe2plate.api.entities.VerificationOtp;
 import com.recipe2plate.api.exceptions.AlreadyExistsException;
 import com.recipe2plate.api.exceptions.BadCredentialsException;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.repositories.AppUserRepository;
 import com.recipe2plate.api.repositories.RoleRepository;
+import com.recipe2plate.api.repositories.VerificationOtpRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -23,6 +26,8 @@ public class AuthenticationService {
 
     private final AppUserRepository appUserRepository;
     private final RoleRepository roleRepository;
+
+    private final VerificationOtpRepository verificationOtpRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
 

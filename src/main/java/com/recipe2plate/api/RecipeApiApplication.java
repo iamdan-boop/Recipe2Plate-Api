@@ -2,10 +2,10 @@ package com.recipe2plate.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableTransactionManagement
 public class RecipeApiApplication {
 
     public static void main(String[] args) {

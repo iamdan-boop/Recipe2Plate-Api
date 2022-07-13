@@ -1,8 +1,8 @@
-package com.recipe2plate.api.config.security;
+package com.recipe2plate.api.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recipe2plate.api.dto.ErrorDto;
+import com.recipe2plate.api.dto.response.ErrorDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;

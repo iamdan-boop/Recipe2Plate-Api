@@ -1,4 +1,4 @@
-package com.recipe2plate.api.config.security;
+package com.recipe2plate.api.security;
 
 
 import com.recipe2plate.api.dto.request.LoginRequest;
@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -48,7 +48,7 @@ public class UserAuthenticationProvider {
         return new UsernamePasswordAuthenticationToken(
                 appUser,
                 null,
-                List.of(new SimpleGrantedAuthority(appUser.getRole().getRoleName()))
+                List.of((GrantedAuthority) () -> (appUser.getRole().getRoleName()))
         );
     }
 
@@ -64,7 +64,7 @@ public class UserAuthenticationProvider {
         return new UsernamePasswordAuthenticationToken(
                 appUser,
                 null,
-                List.of(new SimpleGrantedAuthority(appUser.getRole().getRoleName()))
+                List.of((GrantedAuthority) () -> (appUser.getRole().getRoleName()))
         );
     }
 }

@@ -1,7 +1,7 @@
-package com.recipe2plate.api.config.security;
+package com.recipe2plate.api.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recipe2plate.api.dto.ErrorDto;
+import com.recipe2plate.api.dto.response.ErrorDto;
 import com.recipe2plate.api.dto.request.LoginRequest;
 import com.recipe2plate.api.exceptions.BadCredentialsException;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
@@ -15,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
