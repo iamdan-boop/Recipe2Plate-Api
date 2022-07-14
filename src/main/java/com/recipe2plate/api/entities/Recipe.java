@@ -18,12 +18,12 @@ import java.util.Set;
 public class Recipe extends BaseEntity {
 
     @SequenceGenerator(
-            name = "product_id_seq",
-            sequenceName = "product_id_seq",
+            name = "recipe_id_seq",
+            sequenceName = "recipe_id_seq",
             allocationSize = 1
     )
     @GeneratedValue(
-            generator = "product_id_seq",
+            generator = "recipe_id_seq",
             strategy = GenerationType.SEQUENCE
     )
     @Id
@@ -32,6 +32,10 @@ public class Recipe extends BaseEntity {
     private String recipeName;
 
     private String description;
+
+    private String previewImageUrl;
+
+    private String videoPreviewUrl;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(

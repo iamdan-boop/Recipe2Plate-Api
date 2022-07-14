@@ -1,23 +1,21 @@
 package com.recipe2plate.api.controllers;
 
 
-import com.recipe2plate.api.security.UserAuthenticationProvider;
-import com.recipe2plate.api.dto.response.AuthTokenDto;
 import com.recipe2plate.api.dto.request.SignupRequest;
+import com.recipe2plate.api.dto.response.AuthTokenDto;
 import com.recipe2plate.api.entities.AppUser;
+import com.recipe2plate.api.security.UserAuthenticationProvider;
 import com.recipe2plate.api.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final UserAuthenticationProvider userAuthenticationProvider;

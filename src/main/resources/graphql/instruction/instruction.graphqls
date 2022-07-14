@@ -1,6 +1,0 @@
-type Instruction {
-    id: ID
-    name: String!
-    instruction: String!
-    imageUrl: String!
-}

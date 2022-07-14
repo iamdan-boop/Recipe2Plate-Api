@@ -1,7 +1,10 @@
 package com.recipe2plate.api.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipe2plate.api.dto.response.ErrorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,6 +16,9 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
 
     public final UserAuthenticationProvider authenticationProvider;
 
@@ -35,7 +41,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 );
             } catch (Exception e) {
                 SecurityContextHolder.clearContext();
-                throw e;
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                MAPPER.writeValue(response.getOutputStream(), new ErrorDto("Unauthenticated"));
             }
         }
         filterChain.doFilter(request, response);

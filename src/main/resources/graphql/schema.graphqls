@@ -1,7 +1,0 @@
-type Schema {
-    Recipe: Recipe
-}
-
-type Query {
-    allRecipes: [Recipe]
-}

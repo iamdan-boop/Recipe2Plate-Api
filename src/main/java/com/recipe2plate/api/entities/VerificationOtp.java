@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-@Table(name = "verification_otpsG")
+@Table(name = "verification_otps")
 @Entity
 @Getter
 @Setter

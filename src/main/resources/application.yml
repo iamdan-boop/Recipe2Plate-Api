@@ -5,35 +5,19 @@ spring:
     password: root@123
     url: jdbc:mysql://localhost:3306/recipe_2_plate
   jpa:
-    hibernate:
-      ddl-auto: create-drop
     show-sql: true
     database: mysql
 
+  flyway:
+    user: root
+    password: root@123
+    url: jdbc:mysql://localhost:3306/recipe_2_plate
+    baseline-on-migrate: true
 
-  main:
-    allow-bean-definition-overriding: true
+server:
+  servlet:
+    context-path: "/api"
+
 security.jwt.token.secret-key: qwemqkweqtqkjeqkwehqbgtqkwjeqlkjw
-
-
-
-graphql:
-  altair:
-    enabled: true
-    mapping: /altair
-    subscriptions:
-      timeout: 30
-      reconnect: false
-    static:
-      base-path: /
-    page-title: Altair
-    cdn:
-      enabled: false
-      version: 4.0.2
-    options:
-      endpoint-url: /graphql
-      subscriptions-endpoint: /subscriptions
-      initial-settings:
-        theme: dracula
 
 

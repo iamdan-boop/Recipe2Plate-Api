@@ -17,10 +17,7 @@ import java.io.FileNotFoundException;
 @RequestMapping("/storage")
 @RequiredArgsConstructor
 public class FileSystemController {
-
-
     public final FileSystemService fileSystemService;
-
 
     private String getAccessUrl(String requestUrl, String fileName) throws Exception {
         if (requestUrl == null) throw new Exception("Url not found");

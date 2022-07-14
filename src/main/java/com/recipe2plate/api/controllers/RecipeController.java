@@ -3,7 +3,7 @@ package com.recipe2plate.api.controllers;
 
 import com.recipe2plate.api.dto.request.CreateRecipeRequest;
 import com.recipe2plate.api.dto.response.RecipeDto;
-import com.recipe2plate.api.dto.response.types.RecipeWithPublisher;
+import com.recipe2plate.api.dto.response.types.RecipeWithPublisherCategoryAndInstructions;
 import com.recipe2plate.api.entities.Recipe;
 import com.recipe2plate.api.services.RecipeService;
 import lombok.RequiredArgsConstructor;
@@ -12,34 +12,34 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/recipe")
+@RequestMapping("/recipe")
 @RequiredArgsConstructor
 public class RecipeController {
     private final RecipeService recipeService;
 
     @GetMapping("/")
     public ResponseEntity<List<Recipe>> findAllRecipes() {
-        final List<Recipe> recipes = recipeService.findAllRecipes();
+        final List<Recipe> recipes = recipeService.allRecipes();
         return ResponseEntity.ok().body(recipes);
     }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/{recipeId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<RecipeWithPublisher> findRecipe(@PathVariable Long recipeId) {
-        final RecipeWithPublisher recipe = recipeService.findRecipe(recipeId);
+    public ResponseEntity<Recipe> findRecipe(@PathVariable Long recipeId) {
+        final Recipe recipe = recipeService.findRecipe(recipeId);
         return ResponseEntity.ok().body(recipe);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/addRecipe")
-    public ResponseEntity<Recipe> addRecipe(@Valid @ModelAttribute CreateRecipeRequest createRecipeRequest) {
-        final Recipe recipe = recipeService.addRecipe(createRecipeRequest);
+    public ResponseEntity<RecipeWithPublisherCategoryAndInstructions> addRecipe(@Valid
+                                                                                @ModelAttribute CreateRecipeRequest createRecipeRequest) throws Exception {
+        final RecipeWithPublisherCategoryAndInstructions recipe = recipeService.addRecipe(createRecipeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(recipe);
     }
 

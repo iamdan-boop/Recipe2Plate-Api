@@ -1,4 +1,4 @@
-package com.recipe2plate.api.config.mapper;
+package com.recipe2plate.api.mapper;
 
 
 import com.recipe2plate.api.dto.request.CreateIngredientRequest;

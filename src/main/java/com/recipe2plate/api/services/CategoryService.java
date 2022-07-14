@@ -1,9 +1,9 @@
 package com.recipe2plate.api.services;
 
-import com.recipe2plate.api.config.mapper.CategoryMapper;
 import com.recipe2plate.api.dto.request.CreateCategoryRequest;
 import com.recipe2plate.api.dto.response.CategoryDto;
 import com.recipe2plate.api.entities.Category;
+import com.recipe2plate.api.mapper.CategoryMapper;
 import com.recipe2plate.api.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 @Component
 public class FileUtils {
 
-    public String formatFileName(String fileName) {
+    public static String formatFileName(String fileName) {
         return fileName.replace(" ", "")
                 .replace(Pattern.compile("([ ():])").pattern(), "_");
     }
 
 
-    public FileContainer getFileNameAndExtension(MultipartFile imageFile) throws Exception {
+    public static FileContainer getFileNameAndExtension(MultipartFile imageFile) throws Exception {
         final String fileNameWithExtension = StringUtils.getFilename(imageFile.getOriginalFilename());
         final String filenameExtension = StringUtils.getFilenameExtension(fileNameWithExtension);
 
@@ -29,7 +29,7 @@ public class FileUtils {
     }
 
 
-    public String removeFileExtension(String fileName, Boolean removeAllExtensions) {
+    public static String removeFileExtension(String fileName, Boolean removeAllExtensions) {
         if (fileName.isEmpty()) return fileName;
         final String extPattern = "(?<!^)[.]" + (removeAllExtensions ? ".*" : "[^.]*$");
         return fileName.replace(Pattern.compile(extPattern).pattern(), "");

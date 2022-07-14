@@ -3,6 +3,7 @@ package com.recipe2plate.api.services;
 import com.recipe2plate.api.utils.FileContainer;
 import com.recipe2plate.api.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Named;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,9 +23,7 @@ public class FileSystemService {
 
     private final String rootPath = "F:/springbootprojects/Recipe2Plate/photos/";
 
-    private final FileUtils fileUtils;
-
-
+    @Named("mediaToUrl")
     public String saveImage(MultipartFile imageFile) throws Exception {
         final byte[] imageBytes = imageFile.getBytes();
         final String formattedTimeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh_mm_ss"));
@@ -45,18 +44,18 @@ public class FileSystemService {
         return rootPath + fileName.trim();
     }
 
-    private String getGeneratedFileName(MultipartFile imageFile,
-                                        String prefix,
-                                        String postFix,
-                                        String prefixSep,
-                                        String postfixSep) throws Exception {
-        final FileContainer fileContainer = fileUtils.getFileNameAndExtension(imageFile);
-        final String formattedFileName = fileUtils.formatFileName(fileContainer.getKey());
+    private static String getGeneratedFileName(MultipartFile imageFile,
+                                               String prefix,
+                                               String postFix,
+                                               String prefixSep,
+                                               String postfixSep) throws Exception {
+        final FileContainer fileContainer = FileUtils.getFileNameAndExtension(imageFile);
+        final String formattedFileName = FileUtils.formatFileName(fileContainer.getKey());
         return prefix + prefixSep + formattedFileName + postfixSep + postFix + "." + fileContainer.getValue();
 
     }
 
-    private void writeFileAtDestination(String destination, byte[] fileBytes) throws IOException {
+    private static void writeFileAtDestination(String destination, byte[] fileBytes) throws IOException {
         final Path path = Paths.get(destination);
         Files.write(path, fileBytes);
     }
