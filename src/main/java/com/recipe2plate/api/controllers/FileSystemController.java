@@ -27,7 +27,14 @@ public class FileSystemController {
 
     @GetMapping(value = "/{fileName}", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<FileSystemResource> getFile(@PathVariable String fileName) throws FileNotFoundException {
-        final FileSystemResource resource = fileSystemService.getImage(fileName);
+        final FileSystemResource resource = fileSystemService.getResourceFile(fileName);
         return ResponseEntity.ok().body(resource);
+    }
+
+
+    @GetMapping(value = "/video/{fileName}", produces = "video/mp4")
+    public ResponseEntity<FileSystemResource> getVideoFile(@PathVariable String fileName) throws FileNotFoundException {
+        final FileSystemResource videoResource = fileSystemService.getResourceFile(fileName);
+        return ResponseEntity.ok().body(videoResource);
     }
 }

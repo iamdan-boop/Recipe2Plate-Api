@@ -10,6 +10,11 @@ import java.util.List;
 @Repository
 public interface InstructionRepository extends JpaRepository<Instruction, Long> {
 
-    @Query(value = "SELECT * FROM instructions WHERE id = :recipeId", nativeQuery = true)
+
+    @Query(value = "SELECT * FROM instructions WHERE recipe_id = :recipeId", nativeQuery = true)
+    List<Instruction> findAllByRecipeId(Long recipeId);
+
+
+    @Query(value = "SELECT * FROM instructions WHERE recipe_id = :recipeId", nativeQuery = true)
     List<Instruction> findByRecipeId(Long recipeId);
 }

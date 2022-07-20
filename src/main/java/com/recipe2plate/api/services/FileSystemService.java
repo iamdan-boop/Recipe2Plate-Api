@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,11 +27,10 @@ public class FileSystemService {
     @Named("mediaToUrl")
     public String saveImage(MultipartFile imageFile) throws Exception {
         final byte[] imageBytes = imageFile.getBytes();
-        final String formattedTimeStamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh_mm_ss"));
         final String fileName = getGeneratedFileName(
                 imageFile,
                 "IMG",
-                formattedTimeStamp,
+                getFormattedTimeStamp(),
                 "_",
                 "_"
         );
@@ -39,9 +39,30 @@ public class FileSystemService {
         return fileName;
     }
 
+    @Named("mediaToUrlMp4")
+    public String saveVideoFile(MultipartFile imageFile) throws Exception {
+        final String partExtension = StringUtils.getFilenameExtension(imageFile.getOriginalFilename());
+        if (partExtension == null || !partExtension.equals("mp4")) throw new IOException("Invalid File");
+        final String fileName = getGeneratedFileName(
+                imageFile,
+                "MP4",
+                getFormattedTimeStamp(),
+                "_",
+                "_"
+        );
+        final String destination = getDestination(fileName);
+        writeFileAtDestination(destination, imageFile.getBytes());
+        return fileName;
+    }
+
 
     private String getDestination(String fileName) {
         return rootPath + fileName.trim();
+    }
+
+
+    private String getFormattedTimeStamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy_hh_mm_ss"));
     }
 
     private static String getGeneratedFileName(MultipartFile imageFile,
@@ -61,7 +82,7 @@ public class FileSystemService {
     }
 
 
-    public FileSystemResource getImage(String fileName) throws FileNotFoundException {
+    public FileSystemResource getResourceFile(String fileName) throws FileNotFoundException {
         final String destination = getDestination(fileName);
         final File file = new File(destination);
         if (!file.isFile()) throw new FileNotFoundException("Files doesnt seem to exists");

@@ -1,7 +1,7 @@
 package com.recipe2plate.api.security;
 
 
-import com.recipe2plate.api.dto.request.LoginRequest;
+import com.recipe2plate.api.dto.request.auth.LoginRequest;
 import com.recipe2plate.api.entities.AppUser;
 import com.recipe2plate.api.services.AuthenticationService;
 import io.jsonwebtoken.Claims;

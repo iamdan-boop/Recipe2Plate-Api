@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Table(name = "app_users")
 @Entity
 @Getter
 @Setter
 @Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppUser extends BaseEntity {
@@ -36,6 +36,10 @@ public class AppUser extends BaseEntity {
 
     @JsonIgnore
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "publisher_id")
+    private Set<Recipe> recipes;
 
     @ManyToOne
     private Role role;

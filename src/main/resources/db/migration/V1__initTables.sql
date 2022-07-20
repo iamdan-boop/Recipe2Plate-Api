@@ -85,7 +85,7 @@ CREATE TABLE recipes
     `description`     VARCHAR(255) NULL,
     preview_image_url VARCHAR(255) NULL,
     recipe_name       VARCHAR(255) NULL,
-    video_preview_url VARCHAR(255) NULL,
+    preview_video_url VARCHAR(255) NULL,
     publisher_id      BIGINT       NULL,
     CONSTRAINT PK_RECIPES PRIMARY KEY (id)
 );

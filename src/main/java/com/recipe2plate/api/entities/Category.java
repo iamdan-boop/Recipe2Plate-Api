@@ -1,10 +1,19 @@
 package com.recipe2plate.api.entities;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Table(name = "categories")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Category extends BaseEntity {
 
     @SequenceGenerator(

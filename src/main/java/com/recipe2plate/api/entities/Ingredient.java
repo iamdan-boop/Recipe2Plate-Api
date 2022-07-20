@@ -4,6 +4,7 @@ package com.recipe2plate.api.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "ingredients")
 @Entity
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class Ingredient extends BaseEntity  {
+public class Ingredient extends BaseEntity {
     @SequenceGenerator(
             sequenceName = "ingredient_id_seq",
             name = "ingredient_id_seq",
@@ -26,4 +27,8 @@ public class Ingredient extends BaseEntity  {
     private Long id;
 
     private String ingredientName;
+
+
+    @ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
+    private List<Recipe> recipes;
 }

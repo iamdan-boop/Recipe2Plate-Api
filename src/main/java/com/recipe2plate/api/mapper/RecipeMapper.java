@@ -5,15 +5,24 @@ import com.recipe2plate.api.dto.response.RecipeDto;
 import com.recipe2plate.api.dto.response.types.RecipeWithPublisherAndCategory;
 import com.recipe2plate.api.dto.response.types.RecipeWithPublisherCategoryAndInstructions;
 import com.recipe2plate.api.entities.Recipe;
+import com.recipe2plate.api.services.FileSystemService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {AppUserMapper.class, IngredientMapper.class})
+@Mapper(componentModel = "spring", uses = {
+        AppUserMapper.class,
+        IngredientMapper.class,
+        InstructionMapper.class,
+        FileSystemService.class,
+        InstructionMapper.class,
+})
 public interface RecipeMapper {
 
     RecipeDto toSingleRecipeDto(Recipe recipe);
 
-    @Mapping(target = "instructions", ignore = true)
+    @Mapping(target = "previewVideoUrl", source = "previewVideo", qualifiedByName = "mediaToUrlMp4")
+    @Mapping(target = "previewImageUrl", source = "previewImage", qualifiedByName = "mediaToUrl")
+    @Mapping(target = "categories", ignore = true)
     Recipe toRecipeEntity(CreateRecipeRequest createRecipeRequest);
 
     @Mapping(target = "recipeDto", source = "recipe")

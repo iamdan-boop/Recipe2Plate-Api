@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root@123
+    url: jdbc:mysql://localhost:3306/recipe_2_plate?allowPublicKeyRetrieval=true&useSSL=false
+  jpa:
+    show-sql: true
+    database: mysql
+
+  flyway:
+    user: root
+    password: root@123
+#    url: jdbc:mysql://host.docker.internal:3309/recipe_2_plate?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/recipe_2_plate?allowPublicKeyRetrieval=true&useSSL=false
+    baseline-on-migrate: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+server:
+  servlet:
+    context-path: "/api"
+
+security.jwt.token.secret-key: qwemqkweqtqkjeqkwehqbgtqkwjeqlkjw
+
+

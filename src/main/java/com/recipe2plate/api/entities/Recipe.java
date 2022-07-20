@@ -4,7 +4,6 @@ package com.recipe2plate.api.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "recipes")
@@ -14,7 +13,6 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@ToString
 public class Recipe extends BaseEntity {
 
     @SequenceGenerator(
@@ -35,16 +33,15 @@ public class Recipe extends BaseEntity {
 
     private String previewImageUrl;
 
-    private String videoPreviewUrl;
+    private String previewVideoUrl;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "recipes_categories",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "categories_id")
     )
-    @ToString.Exclude
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -53,14 +50,12 @@ public class Recipe extends BaseEntity {
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredients_id")
     )
-    @ToString.Exclude
-    private Set<Ingredient> ingredients = new HashSet<>();
+    private Set<Ingredient> ingredients;
 
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "recipe_id")
-    @ToString.Exclude
-    private Set<Instruction> instructions = new HashSet<>();
+    private Set<Instruction> instructions;
 
     @OneToOne
     private AppUser publisher;

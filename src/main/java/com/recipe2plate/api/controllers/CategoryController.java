@@ -18,7 +18,6 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-
     @GetMapping("/")
     public ResponseEntity<List<CategoryDto>> findAllCategories() {
         final List<CategoryDto> categories = categoryService.findAllCategories();

@@ -1,19 +1,24 @@
-package com.recipe2plate.api.dto.request;
+package com.recipe2plate.api.dto.request.auth;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateIngredientRequest {
+public class LoginRequest {
+    @NotNull
+    @NotEmpty
+    private String email;
 
     @NotNull
     @NotEmpty
-    private String ingredientName;
+    private String password;
 }

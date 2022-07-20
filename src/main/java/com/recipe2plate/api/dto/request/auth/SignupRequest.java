@@ -1,4 +1,4 @@
-package com.recipe2plate.api.dto.request;
+package com.recipe2plate.api.dto.request.auth;
 
 
 import lombok.AllArgsConstructor;
@@ -13,7 +13,15 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class SignupRequest {
+    @NotNull
+    @NotEmpty
+    private String firstName;
+
+    @NotNull
+    @NotEmpty
+    private String lastName;
+
     @NotNull
     @NotEmpty
     private String email;

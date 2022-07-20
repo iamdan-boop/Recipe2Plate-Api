@@ -30,4 +30,5 @@ public class Instruction extends BaseEntity {
     private String instruction;
 
     private String imageUrl;
+
 }

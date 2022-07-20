@@ -1,4 +1,4 @@
-package com.recipe2plate.api.dto.request;
+package com.recipe2plate.api.dto.request.instruction;
 
 
 import lombok.AllArgsConstructor;
@@ -12,13 +12,17 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@NotNull
-@NotEmpty
 public class CreateInstructionRequest {
-
+    @NotNull
+    @NotEmpty
     private String name;
 
+    @NotNull
+    @NotEmpty
     private String instruction;
 
+
+    @NotNull
+    @NotEmpty
     private MultipartFile instructionMedia;
 }

@@ -13,4 +13,6 @@ import lombok.Setter;
 public class RecipeDto {
     private String recipeName;
     private String description;
+    private String previewImageUrl;
+    private String previewVideoUrl;
 }

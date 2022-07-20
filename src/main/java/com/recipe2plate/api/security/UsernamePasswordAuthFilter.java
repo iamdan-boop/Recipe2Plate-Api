@@ -1,11 +1,12 @@
 package com.recipe2plate.api.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recipe2plate.api.dto.request.auth.LoginRequest;
 import com.recipe2plate.api.dto.response.ErrorDto;
-import com.recipe2plate.api.dto.request.LoginRequest;
 import com.recipe2plate.api.exceptions.BadCredentialsException;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
+@Slf4j
 public class UsernamePasswordAuthFilter extends OncePerRequestFilter {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -30,7 +32,7 @@ public class UsernamePasswordAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        if ("/api/signIn".equals(request.getServletPath()) &&
+        if ("/signIn".equals(request.getServletPath()) &&
                 HttpMethod.POST.matches(request.getMethod())) {
             final LoginRequest loginRequest = MAPPER.readValue(request.getInputStream(), LoginRequest.class);
             try {
