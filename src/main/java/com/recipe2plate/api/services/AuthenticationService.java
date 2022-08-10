@@ -10,13 +10,18 @@ import com.recipe2plate.api.exceptions.BadCredentialsException;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.repositories.AppUserRepository;
 import com.recipe2plate.api.repositories.RoleRepository;
-import com.recipe2plate.api.repositories.VerificationOtpRepository;
+import com.recipe2plate.api.security.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,30 +31,28 @@ public class AuthenticationService {
 
     private final AppUserRepository appUserRepository;
     private final RoleRepository roleRepository;
-
-    private final VerificationOtpRepository verificationOtpRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtTokenUtil jwtTokenUtil;
 
 
-    public AppUser authenticate(LoginRequest loginRequest) {
+    public String authenticate(LoginRequest loginRequest) {
         final AppUser appUser = appUserRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new NoRecordFoundException("Invalid Credentials"));
-        log.info("appUser {}", appUser);
         if (!passwordEncoder.matches(loginRequest.getPassword(), appUser.getPassword())) {
             throw new BadCredentialsException("Invalid Credentials");
         }
-        log.info("authenticateSuccess, {}", appUser);
-        return appUser;
+        final Authentication authentication = new UsernamePasswordAuthenticationToken(
+                appUser,
+                null,
+                List.of((GrantedAuthority) () -> (appUser.getRole().getRoleName()))
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return jwtTokenUtil.generateToken(appUser.getEmail());
     }
 
-
-    public AppUser findByEmail(String email) {
-        return appUserRepository.findByEmail(email)
-                .orElseThrow(() -> new NoRecordFoundException("User doesnt seem to exists"));
-    }
 
     @Transactional
-    public AppUser signUp(SignupRequest signupRequest) {
+    public String signUp(SignupRequest signupRequest) {
         final Optional<AppUser> appUser = appUserRepository
                 .findByEmail(signupRequest.getEmail());
 
@@ -62,12 +65,13 @@ public class AuthenticationService {
 
         final AppUser newUser = AppUser.builder()
                 .firstName(signupRequest.getFirstName())
-                .lastName(signupRequest.getPassword())
+                .lastName(signupRequest.getLastName())
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .role(appUserRole)
                 .build();
 
-        return appUserRepository.save(newUser);
+        appUserRepository.save(newUser);
+        return jwtTokenUtil.generateToken(newUser.getEmail());
     }
 }

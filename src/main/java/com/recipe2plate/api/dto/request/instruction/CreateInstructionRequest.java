@@ -21,8 +21,6 @@ public class CreateInstructionRequest {
     @NotEmpty
     private String instruction;
 
-
     @NotNull
-    @NotEmpty
     private MultipartFile instructionMedia;
 }

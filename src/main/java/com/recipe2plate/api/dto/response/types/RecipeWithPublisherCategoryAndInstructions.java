@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.recipe2plate.api.dto.response.AppUserDto;
 import com.recipe2plate.api.dto.response.CategoryDto;
 import com.recipe2plate.api.dto.response.InstructionDto;
-import com.recipe2plate.api.dto.response.RecipeDto;
-import com.recipe2plate.api.entities.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +15,14 @@ import java.util.List;
 @Getter
 @Setter
 public class RecipeWithPublisherCategoryAndInstructions {
-    @JsonProperty("recipe")
-    private RecipeDto recipeDto;
+    private String recipeName;
+
+    private String description;
+
+    private String previewImageUrl;
+
+    private String previewVideoUrl;
+
     @JsonProperty("instructions")
     private List<InstructionDto> instructionsDto;
     @JsonProperty("categories")

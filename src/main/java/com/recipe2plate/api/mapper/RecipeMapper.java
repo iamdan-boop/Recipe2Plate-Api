@@ -25,12 +25,10 @@ public interface RecipeMapper {
     @Mapping(target = "categories", ignore = true)
     Recipe toRecipeEntity(CreateRecipeRequest createRecipeRequest);
 
-    @Mapping(target = "recipeDto", source = "recipe")
     @Mapping(target = "publisherDto", source = "publisher")
     @Mapping(target = "categoriesDto", source = "categories")
-    RecipeWithPublisherAndCategory toRecipeWithPublisherDto(Recipe recipe);
+    RecipeWithPublisherAndCategory toRecipeWithPublisherAndCategoryDto(Recipe recipe);
 
-    @Mapping(target = "recipeDto", source = "recipe")
     @Mapping(target = "publisherDto", source = "publisher")
     @Mapping(target = "instructionsDto", source = "instructions")
     @Mapping(target = "categoriesDto", source = "categories")

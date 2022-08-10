@@ -1,5 +1,6 @@
 package com.recipe2plate.api.dto.response.types;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.recipe2plate.api.dto.response.AppUserDto;
 import com.recipe2plate.api.dto.response.CategoryDto;
 import com.recipe2plate.api.dto.response.RecipeDto;
@@ -15,7 +16,17 @@ import java.util.List;
 @Getter
 @Setter
 public class RecipeWithPublisherAndCategory {
-    private RecipeDto recipeDto;
+    private String recipeName;
+
+    private String description;
+
+    private String previewImageUrl;
+
+    private String previewVideoUrl;
+
+    @JsonProperty("categories")
     private List<CategoryDto> categoriesDto;
+
+    @JsonProperty("publisher")
     private AppUserDto publisherDto;
 }

@@ -1,7 +1,10 @@
 package com.recipe2plate.api.security;
 
+import com.recipe2plate.api.repositories.AppUserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,12 +19,14 @@ public class SecurityConfig {
 
 
     private final UserAuthenticationEntryPoint userAuthenticationEntryPoint;
-    private final UserAuthenticationProvider userAuthenticationProvider;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final AppUserRepository appUserRepository;
 
 
-    public SecurityConfig(UserAuthenticationEntryPoint userAuthenticationEntryPoint, UserAuthenticationProvider userAuthenticationProvider) {
+    public SecurityConfig(UserAuthenticationEntryPoint userAuthenticationEntryPoint, JwtTokenUtil jwtTokenUtil, AppUserRepository appUserRepository) {
         this.userAuthenticationEntryPoint = userAuthenticationEntryPoint;
-        this.userAuthenticationProvider = userAuthenticationProvider;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.appUserRepository = appUserRepository;
     }
 
 
@@ -43,14 +48,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .exceptionHandling().authenticationEntryPoint(userAuthenticationEntryPoint).and()
-                .addFilterBefore(new UsernamePasswordAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), UsernamePasswordAuthFilter.class)
+                .addFilterBefore(new JwtAuthFilter(appUserRepository, jwtTokenUtil), BasicAuthenticationFilter.class)
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/signIn", "/signUp").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
         return httpSecurity.build();
     }
 }

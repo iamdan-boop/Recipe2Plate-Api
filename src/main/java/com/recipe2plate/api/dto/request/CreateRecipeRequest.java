@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -35,17 +37,16 @@ public class CreateRecipeRequest {
     @NotNull
     private MultipartFile previewVideo;
 
+    @Size(min = 1)
     @NotNull
-    @NotEmpty
     private List<Long> categories;
 
 
+    @Size(min = 1)
     @NotNull
-    @NotEmpty
-    private List<CreateIngredientRequest> ingredients;
+    private List<@Valid CreateIngredientRequest> ingredients;
 
-
+    @Size(min = 1)
     @NotNull
-    @NotEmpty
-    private List<CreateInstructionRequest> instructions;
+    private List<@Valid CreateInstructionRequest> instructions;
 }

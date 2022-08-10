@@ -24,7 +24,6 @@ public class CategoryService {
         return categoryMapper.toCategoriesDto(categories);
     }
 
-
     public CategoryDto addNewCategory(CreateCategoryRequest categoryRequest) {
         final Category category = categoryMapper.toCategoryEntity(categoryRequest);
         return categoryMapper.toCategoryDto(categoryRepository.save(category));

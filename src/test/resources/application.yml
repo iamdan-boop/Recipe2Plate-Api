@@ -1,18 +1,17 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: org.h2.Driver
     username: root
     password: root@123
-    url: jdbc:mysql://localhost:3306/recipe_2_plate?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:h2:mem:recipe_test_db
   jpa:
     show-sql: true
-    database: mysql
+    database: h2
 
   flyway:
     user: root
     password: root@123
-#    url: jdbc:mysql://host.docker.internal:3309/recipe_2_plate?allowPublicKeyRetrieval=true&useSSL=false
-    url: jdbc:mysql://localhost:3306/recipe_2_plate?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:h2:mem:recipe_test_db
     baseline-on-migrate: true
   servlet:
     multipart:

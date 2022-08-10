@@ -39,44 +39,36 @@ public class InstructionService {
     }
 
     @Transactional
-    public InstructionDto addInstruction(CreateInstructionRequest createInstructionRequest,
-                                         Long recipeId) {
-        final Recipe instructionRecipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new NoRecordFoundException("Couldn't add Instruction due to recipe doesnt exists"));
-
+    public void addInstruction(CreateInstructionRequest createInstructionRequest,
+                               Recipe recipe) {
         final Instruction instruction = instructionMapper.toInstructionEntity(createInstructionRequest);
-        instructionRecipe.getInstructions().add(instruction);
+        recipe.getInstructions().add(instruction);
 
-        recipeRepository.save(instructionRecipe);
-        return instructionMapper.toInstructionDto(instruction);
+        recipeRepository.save(recipe);
+        instructionMapper.toInstructionDto(instruction);
     }
 
     public InstructionDto updateInstruction(UpdateInstructionRequest updateInstructionRequest,
-                                            Long instructionId) {
-        final Instruction findInstruction = instructionRepository.findById(instructionId)
-                .orElseThrow(() -> new NoRecordFoundException("No Instruction Found"));
+                                            Instruction instruction) {
 
-        findInstruction.setInstruction(updateInstructionRequest.getInstruction());
-        findInstruction.setName(updateInstructionRequest.getName());
+        instruction.setInstruction(updateInstructionRequest.getInstruction());
+        instruction.setName(updateInstructionRequest.getName());
 
-        return instructionMapper.toInstructionDto(findInstruction);
+        return instructionMapper.toInstructionDto(instructionRepository.save(instruction));
     }
 
 
     public void updateInstructionMedia(MultipartFile instructionMedia,
-                                       Long instructionId) throws Exception {
-
-        final Instruction findInstruction = instructionRepository.findById(instructionId)
-                .orElseThrow(() -> new NoRecordFoundException("No Instruction Found"));
+                                       Instruction instruction) throws Exception {
         final String fileName = fileSystemService.saveImage(instructionMedia);
 
-        findInstruction.setImageUrl(fileName);
-        instructionMapper.toInstructionDto(instructionRepository.save(findInstruction));
+        instruction.setImageUrl(fileName);
+        instructionMapper.toInstructionDto(instructionRepository.save(instruction));
     }
 
 
-    public void deleteInstruction(Long instructionId) {
-        instructionRepository.deleteById(instructionId);
+    public void deleteInstruction(Instruction instruction) {
+        instructionRepository.delete(instruction);
     }
 }
 

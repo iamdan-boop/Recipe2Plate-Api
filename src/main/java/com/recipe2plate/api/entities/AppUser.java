@@ -43,4 +43,14 @@ public class AppUser extends BaseEntity {
 
     @ManyToOne
     private Role role;
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "(" +
+                "id = " + id + ", " +
+                "firstName = " + firstName + ", " +
+                "lastName = " + lastName + ", " +
+                "email = " + email + ", " +
+                "password = " + password + ")";
+    }
 }

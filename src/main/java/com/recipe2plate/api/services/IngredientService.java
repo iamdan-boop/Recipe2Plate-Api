@@ -36,31 +36,25 @@ public class IngredientService {
 
     @Transactional
     public IngredientDto addIngredient(CreateIngredientRequest createIngredientRequest,
-                                       Long recipeId) {
-        final Recipe findIngredientRecipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new NoRecordFoundException("No Recipe Found"));
+                                       Recipe recipe) {
         final Ingredient ingredient = ingredientMapper.toIngredientEntity(createIngredientRequest);
 
-        findIngredientRecipe.getIngredients().add(ingredient);
-        recipeRepository.save(findIngredientRecipe);
+        recipe.getIngredients().add(ingredient);
+        recipeRepository.save(recipe);
         return ingredientMapper.toIngredientDto(ingredient);
     }
 
 
     public IngredientDto updateIngredient(UpdateIngredientRequest updateIngredientRequest,
-                                          Long ingredientId) {
-        final Ingredient findIngredient = ingredientRepository.findById(ingredientId)
-                .orElseThrow(() -> new NoRecordFoundException("No Ingredient Found"));
-
-        findIngredient.setIngredientName(updateIngredientRequest.getIngredientName());
-
-        return ingredientMapper.toIngredientDto(ingredientRepository.save(findIngredient));
+                                          Ingredient ingredient) {
+        ingredient.setIngredientName(updateIngredientRequest.getIngredientName());
+        return ingredientMapper.toIngredientDto(ingredientRepository.save(ingredient));
     }
 
 
 
-    public void deleteIngredient(Long ingredientId) {
-        ingredientRepository.deleteById(ingredientId);
+    public void deleteIngredient(Ingredient ingredient) {
+        ingredientRepository.delete(ingredient);
     }
 
 }
