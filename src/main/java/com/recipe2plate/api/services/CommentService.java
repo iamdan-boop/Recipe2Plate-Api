@@ -33,10 +33,9 @@ public class CommentService {
     }
 
 
-
     public void addNewComment(Post post,
-                                    String comment,
-                                    AppUser commentedBy) {
+                              String comment,
+                              AppUser commentedBy) {
         final Comment newComment = Comment.builder()
                 .commentBy(commentedBy)
                 .post(post)
@@ -46,15 +45,16 @@ public class CommentService {
     }
 
 
-    public Comment updateComment(Comment comment, String updatedComment) {
+    public CommentDto updateComment(Comment comment, String updatedComment) {
         comment.setComment(updatedComment);
-        return commentRepository.save(comment);
+        return commentMapper.toCommentDto(commentRepository.save(comment));
     }
 
 
     public void deleteComment(Long commentId) {
-        final Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new NoRecordFoundException("Comment not found."));
-        commentRepository.delete(comment);
+        commentRepository.findById(commentId)
+                .ifPresentOrElse(commentRepository::delete, () -> {
+                    throw new NoRecordFoundException("Comment not found.");
+                });
     }
 }

@@ -48,10 +48,10 @@ public class CommentController {
 
 
     @PutMapping("/updateComment/{comment}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Optional<Comment> comment,
+    public ResponseEntity<CommentDto> updateComment(@PathVariable Optional<Comment> comment,
                                                  @Valid @RequestBody CreateCommentRequest updateCommentRequest) {
         if (comment.isEmpty()) throw new NoRecordFoundException("Comment not found.");
-        final Comment updatedComment = commentService
+        final CommentDto updatedComment = commentService
                 .updateComment(comment.get(), updateCommentRequest.getComment());
         return ResponseEntity.accepted().body(updatedComment);
     }
