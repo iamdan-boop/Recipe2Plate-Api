@@ -25,5 +25,5 @@ Install all the dependencies of Recipe2Plate Project
 ./mvnw install
 ```
 
-[Docker Installation (Spring/ MYSQL)](https://ilkerguldali.medium.com/1-4-lets-create-a-spring-boot-app-with-mysql-docker-docker-compose-8acaee3a2c4d)
+* [Docker Installation (Spring and MYSQL)]([Docker Installation (Spring/ MYSQL)](https://ilkerguldali.medium.com/1-4-lets-create-a-spring-boot-app-with-mysql-docker-docker-compose-8acaee3a2c4d))
 
