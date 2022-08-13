@@ -3,6 +3,7 @@ package com.recipe2plate.api.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "posts")
 @Entity
@@ -26,10 +27,15 @@ public class Post extends BaseEntity {
     private Long id;
 
     private String description;
-
     @ManyToOne
     private Recipe referencedRecipe;
 
     @ManyToOne
     private AppUser postPublisher;
+
+
+    @OneToMany(mappedBy = "post",
+            fetch= FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comments;
 }

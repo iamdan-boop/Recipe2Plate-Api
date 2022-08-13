@@ -1,6 +1,7 @@
 package com.recipe2plate.api.exceptions;
 
 import com.recipe2plate.api.dto.response.ErrorDto;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;

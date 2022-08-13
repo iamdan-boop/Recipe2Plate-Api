@@ -2,8 +2,8 @@ package com.recipe2plate.api.controllers;
 
 import com.recipe2plate.api.dto.request.CreateRecipeRequest;
 import com.recipe2plate.api.dto.response.RecipeDto;
-import com.recipe2plate.api.dto.response.types.RecipeWithPublisherAndCategory;
-import com.recipe2plate.api.dto.response.types.RecipeWithPublisherCategoryAndInstructions;
+import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherAndCategory;
+import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherCategoryAndInstructions;
 import com.recipe2plate.api.entities.Category;
 import com.recipe2plate.api.entities.Recipe;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;

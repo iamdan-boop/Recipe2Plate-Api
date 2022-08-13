@@ -1,16 +1,13 @@
 package com.recipe2plate.api.dto.request.instruction;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 public class UpdateInstructionRequest {
     @NotNull
     @NotEmpty

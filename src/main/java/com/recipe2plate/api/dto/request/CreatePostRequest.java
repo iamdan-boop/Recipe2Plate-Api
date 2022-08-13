@@ -1,18 +1,13 @@
 package com.recipe2plate.api.dto.request;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
 public class CreatePostRequest {
 
     @NotNull
@@ -20,6 +15,5 @@ public class CreatePostRequest {
     private String description;
 
     @NotNull
-    @NotEmpty
     private Long referencedRecipe;
 }

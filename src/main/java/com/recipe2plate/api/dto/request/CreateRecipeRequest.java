@@ -16,9 +16,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class CreateRecipeRequest {
 
     @NotNull

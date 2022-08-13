@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Table(name = "app_users")
@@ -43,6 +44,14 @@ public class AppUser extends BaseEntity {
 
     @ManyToOne
     private Role role;
+
+
+    @OneToMany(
+            mappedBy = "postPublisher",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL
+    )
+    private List<Post> publishedPosts;
 
     @Override
     public String toString() {

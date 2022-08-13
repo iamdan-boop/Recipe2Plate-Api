@@ -3,8 +3,8 @@ package com.recipe2plate.api.services;
 
 import com.recipe2plate.api.dto.request.CreateRecipeRequest;
 import com.recipe2plate.api.dto.response.RecipeDto;
-import com.recipe2plate.api.dto.response.types.RecipeWithPublisherAndCategory;
-import com.recipe2plate.api.dto.response.types.RecipeWithPublisherCategoryAndInstructions;
+import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherAndCategory;
+import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherCategoryAndInstructions;
 import com.recipe2plate.api.entities.AppUser;
 import com.recipe2plate.api.entities.Category;
 import com.recipe2plate.api.entities.Recipe;
@@ -87,6 +87,9 @@ public class RecipeService {
 
 
     public void deleteRecipe(Long recipe) {
-        recipeRepository.deleteById(recipe);
+        recipeRepository.findById(recipe)
+                .ifPresentOrElse(recipeRepository::delete, () -> {
+                    throw new NoRecordFoundException("Recipe not found.");
+                });
     }
 }
