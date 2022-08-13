@@ -6,6 +6,7 @@ REST API for Serving Recipe of Dishes with MYSQL and SpringBoot
 ![spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![mysql](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 
+![Database Structure](https://github.com/iamdan-boop/Recipe2Plate-Api/blob/main/src/main/resources/database_structure.png)
 
 
 
