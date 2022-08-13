@@ -5,6 +5,7 @@ REST API for Serving Recipe of Dishes with MYSQL and SpringBoot
 ![java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![mysql](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 # Database Structure
@@ -32,6 +33,8 @@ Install all the dependencies of Recipe2Plate Project
 
 
 # License
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 MIT License
 
 Copyright (c) [year] [fullname]
