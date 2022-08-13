@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: root
+    password: root@123
+    url: jdbc:h2:mem:recipe_test_db
+  jpa:
+    show-sql: true
+    database: h2
+
+  flyway:
+    user: root
+    password: root@123
+    url: jdbc:h2:mem:recipe_test_db
+    baseline-on-migrate: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+server:
+  servlet:
+    context-path: "/api"
+
+security.jwt.token.secret-key: qwemqkweqtqkjeqkwehqbgtqkwjeqlkjw
+
+

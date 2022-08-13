@@ -1,8 +1,11 @@
 package com.recipe2plate.api.exceptions;
 
-import com.recipe2plate.api.dto.ErrorDto;
+import com.recipe2plate.api.dto.response.ErrorDto;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,10 +26,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<?> handleBindException(BindException ex) {
+        final Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach((value) -> {
+            errors.put(value.getField(), value.getDefaultMessage());
+        });
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
     @ExceptionHandler(NoRecordFoundException.class)
     public ResponseEntity<ErrorDto> handleRecordNotFoundException(NoRecordFoundException ex) {
         final ErrorDto errorDto = new ErrorDto(ex.getStatusMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDto);
+    }
+
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorDto> handleAccessDeniedException(AccessDeniedException ex) {
+        final ErrorDto errorDto = new ErrorDto(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorDto);
     }
 
 

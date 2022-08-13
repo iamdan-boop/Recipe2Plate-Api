@@ -1,10 +1,7 @@
 package com.recipe2plate.api.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,7 +11,8 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+@ToString
+public class Role extends BaseEntity  {
     @SequenceGenerator(
             name = "role_id_seq",
             sequenceName = "role_id_seq",
