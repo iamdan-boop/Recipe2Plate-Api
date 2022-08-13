@@ -1,6 +1,7 @@
 package com.recipe2plate.api.controllers;
 
 import com.recipe2plate.api.dto.request.CreateRecipeRequest;
+import com.recipe2plate.api.dto.request.UpdateRecipeRequest;
 import com.recipe2plate.api.dto.response.RecipeDto;
 import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherAndCategory;
 import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherCategoryAndInstructions;
@@ -65,11 +66,11 @@ public class RecipeController {
     @PreAuthorize("hasRole('ROLE_USER') AND " +
             "@recipePermission.shouldAuthorizeDestructiveActions(#recipe)")
     @PutMapping("/updateRecipe/{recipe}")
-    public ResponseEntity<RecipeDto> updateRecipe(@Valid @RequestBody RecipeDto recipeDto,
-                                                  @PathVariable Optional<Recipe> recipe) {
+    public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Optional<Recipe> recipe,
+                                                  @Valid @ModelAttribute UpdateRecipeRequest updateRecipeRequest) throws Exception {
         if (recipe.isEmpty()) throw new NoRecordFoundException("Recipe not found.");
 
-        final RecipeDto updatedRecipe = recipeService.updateRecipe(recipe.get(), recipeDto);
+        final RecipeDto updatedRecipe = recipeService.updateRecipe(recipe.get(), updateRecipeRequest);
         return ResponseEntity.accepted().body(updatedRecipe);
     }
 

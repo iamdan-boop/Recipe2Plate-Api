@@ -2,6 +2,7 @@ package com.recipe2plate.api.services;
 
 
 import com.recipe2plate.api.dto.request.CreateRecipeRequest;
+import com.recipe2plate.api.dto.request.UpdateRecipeRequest;
 import com.recipe2plate.api.dto.response.RecipeDto;
 import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherAndCategory;
 import com.recipe2plate.api.dto.response.recipe.RecipeWithPublisherCategoryAndInstructions;
@@ -79,9 +80,22 @@ public class RecipeService {
         return recipeMapper.toRecipeWithPublisherCategoryAndInstruction(recipe);
     }
 
-    public RecipeDto updateRecipe(Recipe updateRecipe, RecipeDto recipeDto) {
-        updateRecipe.setRecipeName(recipeDto.getRecipeName());
-        updateRecipe.setDescription(recipeDto.getDescription());
+    public RecipeDto updateRecipe(Recipe updateRecipe,
+                                  UpdateRecipeRequest updateRecipeRequest) throws Exception {
+        if (updateRecipeRequest.getPreviewImage() != null) {
+            updateRecipe.setPreviewImageUrl(fileSystemService.
+                    saveImage(updateRecipeRequest.getPreviewImage())
+            );
+        }
+
+        if (updateRecipeRequest.getPreviewVideo() != null) {
+            updateRecipe.setPreviewVideoUrl(fileSystemService.
+                    saveVideoFile(updateRecipeRequest.getPreviewVideo())
+            );
+        }
+
+        updateRecipe.setRecipeName(updateRecipeRequest.getRecipeName());
+        updateRecipe.setDescription(updateRecipeRequest.getDescription());
         return recipeMapper.toSingleRecipeDto(recipeRepository.save(updateRecipe));
     }
 
