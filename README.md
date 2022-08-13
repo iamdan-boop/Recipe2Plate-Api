@@ -5,10 +5,11 @@ REST API for Serving Recipe of Dishes with MYSQL and SpringBoot
 ![java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![mysql](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 # Database Structure
+
 ![Database Structure](https://github.com/iamdan-boop/Recipe2Plate-Api/blob/main/src/main/resources/database_structure.png)
 
 
@@ -33,6 +34,7 @@ Install all the dependencies of Recipe2Plate Project
 
 
 # License
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 MIT License
@@ -56,3 +58,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+# Contact
+
+* Facebook - [Dan Janus Pineda](www.facebook.com/imnotdanwtf)
+* Instagram - [Dan Janus Pineda](https://www.instagram.com/imnotdan/)
