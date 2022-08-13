@@ -62,5 +62,5 @@ SOFTWARE.
 
 # Contact
 
-* Facebook - [Dan Janus Pineda](www.facebook.com/imnotdanwtf)
+* Facebook - [Dan Janus Pineda](https://www.facebook.com/imnotdanwtf)
 * Instagram - [Dan Janus Pineda](https://www.instagram.com/imnotdan/)
