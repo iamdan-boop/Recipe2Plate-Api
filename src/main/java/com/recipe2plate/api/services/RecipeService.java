@@ -13,8 +13,6 @@ import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.mapper.RecipeMapper;
 import com.recipe2plate.api.repositories.CategoryRepository;
 import com.recipe2plate.api.repositories.RecipeRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,16 +24,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
-
     private final CategoryRepository categoryRepository;
     private final RecipeMapper recipeMapper;
-
     private final FileSystemService fileSystemService;
+
+    public RecipeService(RecipeRepository recipeRepository,
+                         CategoryRepository categoryRepository,
+                         RecipeMapper recipeMapper,
+                         FileSystemService fileSystemService) {
+        this.recipeRepository = recipeRepository;
+        this.categoryRepository = categoryRepository;
+        this.recipeMapper = recipeMapper;
+        this.fileSystemService = fileSystemService;
+    }
 
     public List<RecipeWithPublisherAndCategory> allRecipes(Pageable page) {
         return recipeRepository.findAll(page)

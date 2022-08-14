@@ -10,7 +10,6 @@ import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.mapper.PostMapper;
 import com.recipe2plate.api.repositories.PostRepository;
 import com.recipe2plate.api.repositories.RecipeRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
@@ -28,6 +26,14 @@ public class PostService {
     private final RecipeRepository recipeRepository;
 
     private final PostMapper postMapper;
+
+    public PostService(PostRepository postRepository,
+                       RecipeRepository recipeRepository,
+                       PostMapper postMapper) {
+        this.postRepository = postRepository;
+        this.recipeRepository = recipeRepository;
+        this.postMapper = postMapper;
+    }
 
     public List<PostDto> allPosts(Pageable pageable) {
         return this.postRepository.findAll(pageable)

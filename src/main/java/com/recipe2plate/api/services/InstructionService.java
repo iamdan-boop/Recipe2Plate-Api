@@ -6,11 +6,9 @@ import com.recipe2plate.api.dto.request.instruction.UpdateInstructionRequest;
 import com.recipe2plate.api.dto.response.InstructionDto;
 import com.recipe2plate.api.entities.Instruction;
 import com.recipe2plate.api.entities.Recipe;
-import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.mapper.InstructionMapper;
 import com.recipe2plate.api.repositories.InstructionRepository;
 import com.recipe2plate.api.repositories.RecipeRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +19,22 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class InstructionService {
 
     private final InstructionRepository instructionRepository;
-
     private final RecipeRepository recipeRepository;
     private final InstructionMapper instructionMapper;
-
     private final FileSystemService fileSystemService;
+
+    public InstructionService(InstructionRepository instructionRepository,
+                              RecipeRepository recipeRepository,
+                              InstructionMapper instructionMapper,
+                              FileSystemService fileSystemService) {
+        this.instructionRepository = instructionRepository;
+        this.recipeRepository = recipeRepository;
+        this.instructionMapper = instructionMapper;
+        this.fileSystemService = fileSystemService;
+    }
 
     public List<InstructionDto> allInstructions(Long recipeId) {
         return instructionRepository.findAllByRecipeId(recipeId)

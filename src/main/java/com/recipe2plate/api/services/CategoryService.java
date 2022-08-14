@@ -5,18 +5,20 @@ import com.recipe2plate.api.dto.response.CategoryDto;
 import com.recipe2plate.api.entities.Category;
 import com.recipe2plate.api.mapper.CategoryMapper;
 import com.recipe2plate.api.repositories.CategoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-@Repository
-@RequiredArgsConstructor
+@Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+    }
 
 
     public List<CategoryDto> findAllCategories() {
