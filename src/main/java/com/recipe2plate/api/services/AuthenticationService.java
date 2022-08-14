@@ -11,7 +11,6 @@ import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.repositories.AppUserRepository;
 import com.recipe2plate.api.repositories.RoleRepository;
 import com.recipe2plate.api.security.JwtTokenUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,13 +25,22 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class AuthenticationService {
 
     private final AppUserRepository appUserRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtTokenUtil jwtTokenUtil;
+
+    public AuthenticationService(AppUserRepository appUserRepository,
+                                 RoleRepository roleRepository,
+                                 BCryptPasswordEncoder passwordEncoder,
+                                 JwtTokenUtil jwtTokenUtil) {
+        this.appUserRepository = appUserRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
 
     public String authenticate(LoginRequest loginRequest) {
