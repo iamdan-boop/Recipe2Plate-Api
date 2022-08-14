@@ -15,6 +15,7 @@ import com.recipe2plate.api.repositories.CategoryRepository;
 import com.recipe2plate.api.repositories.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,33 +37,33 @@ public class RecipeService {
 
     private final FileSystemService fileSystemService;
 
-    public List<RecipeWithPublisherAndCategory> allRecipes() {
-        return this.recipeRepository.findAll()
+    public List<RecipeWithPublisherAndCategory> allRecipes(Pageable page) {
+        return recipeRepository.findAll(page)
                 .stream()
                 .map(recipeMapper::toRecipeWithPublisherAndCategoryDto)
                 .collect(Collectors.toList());
     }
 
-    public List<RecipeWithPublisherAndCategory> searchRecipe(String query) {
+    public List<RecipeWithPublisherAndCategory> searchRecipe(String query, Pageable page) {
         if (query == null || query.isEmpty() || query.isBlank()) {
             return Collections.emptyList();
         }
-        return recipeRepository.findByRecipeNameContainingIgnoreCase(query)
+        return recipeRepository.findByRecipeNameContainingIgnoreCase(query, page)
                 .stream()
                 .map(recipeMapper::toRecipeWithPublisherAndCategoryDto)
                 .collect(Collectors.toList());
     }
 
 
-    public List<RecipeWithPublisherAndCategory> searchRecipeByCategory(Category category) {
-        return recipeRepository.findByCategoriesContaining(category)
+    public List<RecipeWithPublisherAndCategory> searchRecipeByCategory(Category category, Pageable page) {
+        return recipeRepository.findByCategoriesContaining(category, page)
                 .stream()
                 .map(recipeMapper::toRecipeWithPublisherAndCategoryDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public RecipeWithPublisherCategoryAndInstructions addRecipe(CreateRecipeRequest createRecipeRequest) throws Exception {
+    public void addRecipe(CreateRecipeRequest createRecipeRequest) throws Exception {
         final List<Category> categories = categoryRepository
                 .findAllById(createRecipeRequest.getCategories());
         final Recipe recipe = recipeMapper.toRecipeEntity(createRecipeRequest);
@@ -71,7 +72,7 @@ public class RecipeService {
         recipe.setPublisher((AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         recipe.setPreviewImageUrl(fileSystemService.saveImage(createRecipeRequest.getPreviewImage()));
 
-        return recipeMapper.toRecipeWithPublisherCategoryAndInstruction(recipeRepository.save(recipe));
+        recipeMapper.toRecipeWithPublisherCategoryAndInstruction(recipeRepository.save(recipe));
     }
 
     public RecipeWithPublisherCategoryAndInstructions findRecipe(Long recipeId) {

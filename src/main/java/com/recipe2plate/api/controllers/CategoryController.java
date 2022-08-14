@@ -7,6 +7,8 @@ import com.recipe2plate.api.entities.Category;
 import com.recipe2plate.api.entities.Recipe;
 import com.recipe2plate.api.repositories.RecipeRepository;
 import com.recipe2plate.api.services.CategoryService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +43,9 @@ public class CategoryController {
 
 
     @GetMapping("/{category}")
-    public ResponseEntity<List<Recipe>> findCategory(@PathVariable Category category) {
-        final List<Recipe> searchByCategory = recipeRepository.findByCategoriesContaining(category);
+    public ResponseEntity<List<Recipe>> findCategory(@PathVariable Category category,
+                                                     @PageableDefault Pageable pageable) {
+        final List<Recipe> searchByCategory = recipeRepository.findByCategoriesContaining(category, pageable);
         return ResponseEntity.ok().body(searchByCategory);
     }
 }

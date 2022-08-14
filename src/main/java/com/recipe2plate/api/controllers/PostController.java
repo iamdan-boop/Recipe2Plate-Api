@@ -9,6 +9,8 @@ import com.recipe2plate.api.entities.Post;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.services.PostService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,9 +34,17 @@ public class PostController {
 
 
     @GetMapping("/")
-    public ResponseEntity<List<PostDto>> allPosts() {
-        final List<PostDto> allPosts = postService.allPosts();
+    public ResponseEntity<List<PostDto>> allPosts(@PageableDefault Pageable page) {
+        final List<PostDto> allPosts = postService.allPosts(page);
         return ResponseEntity.ok().body(allPosts);
+    }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PostDto>> searchPosts(@RequestParam String query,
+                                                     @PageableDefault Pageable page) {
+        final List<PostDto> searchPosts = postService.searchPost(query, page);
+        return ResponseEntity.ok().body(searchPosts);
     }
 
     @GetMapping("/{postId}")
@@ -53,8 +63,8 @@ public class PostController {
 
     @PutMapping("/updatePost/{post}")
     public ResponseEntity<PostDto> updatePost(@PathVariable Optional<Post> post,
-                                           @Valid
-                                           @RequestBody UpdatePostRequest updatePostRequest) {
+                                              @Valid
+                                              @RequestBody UpdatePostRequest updatePostRequest) {
         if (post.isEmpty()) throw new NoRecordFoundException("Post not found.");
 
         final PostDto updatedPost = postService.updatePost(post.get(), updatePostRequest);

@@ -11,9 +11,11 @@ import com.recipe2plate.api.mapper.PostMapper;
 import com.recipe2plate.api.repositories.PostRepository;
 import com.recipe2plate.api.repositories.RecipeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +29,20 @@ public class PostService {
 
     private final PostMapper postMapper;
 
-    public List<PostDto> allPosts() {
-        return this.postRepository.findAll()
+    public List<PostDto> allPosts(Pageable pageable) {
+        return this.postRepository.findAll(pageable)
+                .stream()
+                .map(postMapper::toPostDto)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<PostDto> searchPost(String query, Pageable page) {
+        if (query == null || query.isEmpty() || query.isBlank()) {
+            return Collections.emptyList();
+        }
+        return postRepository
+                .searchPostsByDescriptionContaining(query, page)
                 .stream()
                 .map(postMapper::toPostDto)
                 .collect(Collectors.toList());

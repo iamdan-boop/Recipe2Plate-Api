@@ -10,6 +10,8 @@ import com.recipe2plate.api.entities.Recipe;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,8 +32,8 @@ public class RecipeController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<RecipeWithPublisherAndCategory>> allRecipes() {
-        final List<RecipeWithPublisherAndCategory> recipes = recipeService.allRecipes();
+    public ResponseEntity<List<RecipeWithPublisherAndCategory>> allRecipes(@PageableDefault Pageable page) {
+        final List<RecipeWithPublisherAndCategory> recipes = recipeService.allRecipes(page);
         return ResponseEntity.ok().body(recipes);
     }
 
@@ -43,22 +45,24 @@ public class RecipeController {
         return ResponseEntity.ok().body(findRecipe);
     }
 
-    @GetMapping
-    public ResponseEntity<List<RecipeWithPublisherAndCategory>> searchRecipe(@RequestParam String query) {
-        final List<RecipeWithPublisherAndCategory> searchRecipes = recipeService.searchRecipe(query);
+    @GetMapping("/search")
+    public ResponseEntity<List<RecipeWithPublisherAndCategory>> searchRecipe(@RequestParam String query,
+                                                                             @PageableDefault Pageable page) {
+        final List<RecipeWithPublisherAndCategory> searchRecipes = recipeService.searchRecipe(query, page);
         return ResponseEntity.ok().body(searchRecipes);
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<RecipeWithPublisherAndCategory>> searchByCategory(@PathVariable Category category) {
-        final List<RecipeWithPublisherAndCategory> recipesByCategory = recipeService.searchRecipeByCategory(category);
+    public ResponseEntity<List<RecipeWithPublisherAndCategory>> searchByCategory(@PathVariable Category category,
+                                                                                 @PageableDefault Pageable page) {
+        final List<RecipeWithPublisherAndCategory> recipesByCategory = recipeService.searchRecipeByCategory(category, page);
         return ResponseEntity.ok().body(recipesByCategory);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(value = "/addRecipe")
-    public ResponseEntity<RecipeWithPublisherCategoryAndInstructions> addRecipe(@Valid @ModelAttribute
-                                                                                CreateRecipeRequest createRecipeRequest) throws Exception {
+    public ResponseEntity<RecipeWithPublisherCategoryAndInstructions> addRecipe(@Valid
+                                                                                @ModelAttribute CreateRecipeRequest createRecipeRequest) throws Exception {
         recipeService.addRecipe(createRecipeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

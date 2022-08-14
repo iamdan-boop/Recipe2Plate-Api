@@ -8,6 +8,7 @@ import com.recipe2plate.api.entities.Post;
 import com.recipe2plate.api.exceptions.NoRecordFoundException;
 import com.recipe2plate.api.mapper.CommentMapper;
 import com.recipe2plate.api.repositories.CommentRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class CommentService {
     }
 
 
-    public List<CommentDto> allCommentsByPost(Long postId) {
-        return commentRepository.findCommentsByPostId(postId)
+    public List<CommentDto> allCommentsByPost(Long postId, Pageable page) {
+        return commentRepository.findCommentsByPostId(postId, page)
                 .stream()
                 .map(commentMapper::toCommentDto)
                 .collect(Collectors.toList());
